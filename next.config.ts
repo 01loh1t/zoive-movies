@@ -7,6 +7,18 @@ const nextConfig: NextConfig = {
     unoptimized: true,
     remotePatterns: [{ protocol: "https", hostname: "image.tmdb.org" }],
   },
+  // Always fetch the newest service worker, so app updates reach installed users.
+  async headers() {
+    return [
+      {
+        source: "/sw.js",
+        headers: [
+          { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" },
+          { key: "Content-Type", value: "application/javascript; charset=utf-8" },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

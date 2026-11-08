@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Notice } from "@/components/Notice";
 import { hasSupabase } from "@/lib/env";
@@ -36,6 +37,13 @@ export default async function LoginPage({ searchParams }: Props) {
       <div className="mt-8 rounded-xl bg-surface p-6 shadow-card sm:p-8">
         <LoginForm next={next} linkError={sp.error === "link"} googleEnabled={providers.google} />
       </div>
+      <p className="mt-4 text-center text-sm text-muted">
+        By signing in you agree to our{" "}
+        <Link href="/privacy" className="font-bold text-text underline">
+          privacy policy
+        </Link>
+        .
+      </p>
     </div>
   );
 }

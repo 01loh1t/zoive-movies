@@ -8,6 +8,8 @@ import { useToast } from "@/components/Toast";
 import { useUser } from "@/components/UserProvider";
 import { COUNTRIES, COUNTRY_COOKIE } from "@/lib/catalog";
 import { clearRecent } from "@/lib/recent";
+import { DeleteAccount } from "./DeleteAccount";
+import { InstallSection } from "./InstallSection";
 
 const card = "mt-6 rounded-xl bg-surface p-6 shadow-card";
 
@@ -58,6 +60,8 @@ export function SettingsForm({
           </div>
         </fieldset>
       </section>
+
+      <InstallSection className={card} />
 
       <section aria-labelledby="s-country" className={card}>
         <h2 id="s-country" className="text-lg font-bold">
@@ -120,6 +124,9 @@ export function SettingsForm({
                   Sign out
                 </button>
               </form>
+              <div className="w-full">
+                <DeleteAccount />
+              </div>
             </div>
           ) : (
             <div className="mt-2 flex flex-wrap items-center justify-between gap-3">

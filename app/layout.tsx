@@ -4,6 +4,7 @@ import { Figtree } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { MobileNav } from "@/components/Nav";
+import { PwaSetup } from "@/components/PwaSetup";
 import { ToastProvider } from "@/components/Toast";
 import { UserProvider } from "@/components/UserProvider";
 import { hasSupabase } from "@/lib/env";
@@ -16,6 +17,8 @@ export const metadata: Metadata = {
   title: { default: "Zoive Movies: find your next favorite film", template: "%s · Zoive Movies" },
   description:
     "Search movies, see what's trending, watch trailers, find where to stream, and keep a watchlist with personal suggestions.",
+  applicationName: "Zoive Movies",
+  appleWebApp: { capable: true, title: "Zoive", statusBarStyle: "black" },
 };
 
 export const viewport: Viewport = {
@@ -60,12 +63,18 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                   </a>
                   . Streaming data by JustWatch.
                 </p>
-                <Link href="/settings" className="hover:text-text">
-                  Settings
-                </Link>
+                <div className="flex gap-4">
+                  <Link href="/privacy" className="hover:text-text">
+                    Privacy
+                  </Link>
+                  <Link href="/settings" className="hover:text-text">
+                    Settings
+                  </Link>
+                </div>
               </div>
             </footer>
             <MobileNav />
+            <PwaSetup />
           </ToastProvider>
         </UserProvider>
       </body>

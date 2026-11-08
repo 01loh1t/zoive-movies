@@ -78,3 +78,21 @@ create trigger trim_recent_searches
 
 create index if not exists watchlist_user_added on public.watchlist (user_id, added_at desc);
 create index if not exists ratings_user_rated on public.ratings (user_id, rated_at desc);
+
+-- ── "Delete my account" (also in supabase/delete-account.sql) ──
+create or replace function public.delete_my_account()
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  if auth.uid() is null then
+    raise exception 'Not signed in';
+  end if;
+  delete from auth.users where id = auth.uid();
+end;
+$$;
+
+revoke all on function public.delete_my_account() from public, anon;
+grant execute on function public.delete_my_account() to authenticated;
