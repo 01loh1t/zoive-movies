@@ -3,7 +3,15 @@
 import { useState } from "react";
 import { getSupabaseBrowser } from "@/lib/supabase/client";
 
-export function LoginForm({ next, linkError }: { next: string; linkError: boolean }) {
+export function LoginForm({
+  next,
+  linkError,
+  googleEnabled,
+}: {
+  next: string;
+  linkError: boolean;
+  googleEnabled: boolean;
+}) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const [error, setError] = useState<string | null>(
@@ -94,6 +102,8 @@ export function LoginForm({ next, linkError }: { next: string; linkError: boolea
         </button>
       </form>
 
+      {googleEnabled && (
+        <>
       <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.12em] text-muted">
         <span className="h-px flex-1 bg-line" /> or <span className="h-px flex-1 bg-line" />
       </div>
@@ -111,6 +121,8 @@ export function LoginForm({ next, linkError }: { next: string; linkError: boolea
         </svg>
         Continue with Google
       </button>
+        </>
+      )}
     </div>
   );
 }

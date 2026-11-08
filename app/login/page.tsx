@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { Notice } from "@/components/Notice";
 import { hasSupabase } from "@/lib/env";
 import { safeNext } from "@/lib/safe-next";
+import { getAuthProviders } from "@/lib/supabase/providers";
 import { getUser } from "@/lib/supabase/server";
 import { LoginForm } from "./LoginForm";
 
@@ -23,7 +24,7 @@ export default async function LoginPage({ searchParams }: Props) {
     );
   }
 
-  const { user } = await getUser();
+  const [{ user }, providers] = await Promise.all([getUser(), getAuthProviders()]);
   if (user) redirect(next);
 
   return (
@@ -33,7 +34,7 @@ export default async function LoginPage({ searchParams }: Props) {
         Save a watchlist, rate movies and get suggestions on any device. No password needed.
       </p>
       <div className="mt-8 rounded-xl bg-surface p-6 shadow-card sm:p-8">
-        <LoginForm next={next} linkError={sp.error === "link"} />
+        <LoginForm next={next} linkError={sp.error === "link"} googleEnabled={providers.google} />
       </div>
     </div>
   );
